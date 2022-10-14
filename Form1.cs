@@ -30,6 +30,7 @@ namespace NeonPlaysTwitch
             InitializeComponent();
         }
 
+        string Currentwindow;
         public void GetActiveWindow()
         {
             const int nChars = 256;
@@ -38,7 +39,7 @@ namespace NeonPlaysTwitch
             handle = GetForegroundWindow();
             if (GetWindowText(handle, Buff, nChars) > 0)
             {
-                string Currentwindow = Buff.ToString();
+                Currentwindow = Buff.ToString();
             }
         }
 
@@ -47,14 +48,14 @@ namespace NeonPlaysTwitch
 
         [DllImport("user32.dll")]
         internal static extern bool ShowWindow(IntPtr hWnd, int nCmdShow); //ShowWindow needs an IntPtr
-        string Currentwindow;
+
         private static void FocusVBA()
         {
             IntPtr hWnd; //change this to IntPtr
             Process[] processRunning = Process.GetProcesses();
             foreach (Process pr in processRunning)
             {
-                if (pr.ProcessName == "VisualBoyAdvance")
+                if (pr.ProcessName == "patched-crystal - VisualBoyAdvance-M 2.1.4-8f278697")
                 {
                     hWnd = pr.MainWindowHandle; //use it as IntPtr not int
                     ShowWindow(hWnd, 3);
@@ -83,8 +84,8 @@ namespace NeonPlaysTwitch
             // will trigger the click event.
             GetActiveWindow();
             FocusVBA();
-            SendKeys.Send("7");
-            FocusCurrent("Currentwindow");
+            SendKeys.Send("z");
+            FocusCurrent(Currentwindow);
         }
     }
 }
